@@ -1,0 +1,7 @@
+node_modules
+xampp
+webalizer
+.git
+.gitignore
+.env
+.env.*
