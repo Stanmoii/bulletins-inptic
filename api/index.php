@@ -15,6 +15,12 @@ if (strpos($normalized, '..') !== false) {
 
 $target = realpath($projectRoot . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, $normalized));
 
+// Backward-compatible fallback for top-level PHP routes like /login.php.
+if (($target === false || !is_file($target)) && strpos($normalized, '/') === false) {
+    $fallback = 'inptic_asur/' . $normalized;
+    $target = realpath($projectRoot . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, $fallback));
+}
+
 if ($target === false || strpos($target, $projectRoot) !== 0 || !is_file($target)) {
     http_response_code(404);
     exit('Not Found');
